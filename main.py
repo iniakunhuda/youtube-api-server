@@ -7,6 +7,7 @@ from typing import Optional, List, Dict, Any
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 try:
     from youtube_transcript_api import YouTubeTranscriptApi
@@ -36,6 +37,13 @@ app = FastAPI(
     license_info={
         "name": "MIT License",
     },
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
 )
 
 class YouTubeRequest(BaseModel):
